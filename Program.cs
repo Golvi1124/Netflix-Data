@@ -1,17 +1,32 @@
 ﻿// dotnet add package CsvHelper --version 33.0.1
+//base for everything is mix from lectures
+//using data taken from: https://www.kaggle.com/datasets/padmapriyatr/netflix-titles
 
+namespace Netflix_Data;
 using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Netflix_Data.Models;
 
-namespace Netflix_Data;
+using Netflix_Data.Models;
+using Netflix_Data.Controllers;
+
+
 
 class Program
 {
     static void Main(string[] args)
     {
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+      // Here we create an instance of our data NetflixDataset, the one that will be our model of the file itself.
+        var dataset = new NetflixDataset();
+        Console.WriteLine("Welcome to the Netflix data base!");
+        var controller = new InputController(dataset);
+        controller.Run();
+    }
+}
+
+
+
+/*   var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             PrepareHeaderForMatch = args => args.Header.ToLower(),
         };
@@ -19,11 +34,8 @@ class Program
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
             var data = csv.GetRecords<NetflixRows>();
-        }
+        } */
 
-
-    }
-}
 
 /* 
 static void Main(string[] args)
